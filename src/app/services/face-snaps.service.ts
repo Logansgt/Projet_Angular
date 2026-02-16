@@ -17,15 +17,19 @@ export class FaceSnapsService {
     return [...this.faceSnaps] // Pour retourner un tableau indépendant meme si il à les mêmes références
   }
 
-  snapFaceById(faceSnapId: string, snapType: SnapType) {
-    for (let faceSnap of this.faceSnaps) {
-      const trouverSnap = this.faceSnaps.find(FaceSnap => faceSnap.id === faceSnapId);
-      if (!trouverSnap) {
-        console.log("No snap snap found with ID " + faceSnap.id);
-        break;
-      }else{
-        trouverSnap.snap(snapType);
-      }
+  // Utilisation du service pour certaines méthodes :
+
+  getSnapById(id: string): FaceSnap {
+    const trouverSnap = this.faceSnaps.find(FaceSnap => FaceSnap.id === id );
+    if (!trouverSnap) {
+      throw new Error("No snap snap found with ID " + id);
+    }else{
+      return trouverSnap;
     }
   }
+
+  snapFaceById(faceSnapId: string, snapType: SnapType) {
+      const trouverSnap = this.getSnapById(faceSnapId);
+      trouverSnap.snap(snapType);
+    }
 }
