@@ -1,14 +1,19 @@
 import {Component, Input, OnInit} from '@angular/core';
 import {FaceSnap} from '../models/face-snap';
-import {NgClass, NgStyle} from '@angular/common';
+import {DatePipe, DecimalPipe, NgClass, NgStyle, PercentPipe, TitleCasePipe, UpperCasePipe} from '@angular/common';
+import {FaceSnapsService} from '../services/face-snaps.service';
 
 @Component({
   selector: 'app-comp1',
-  imports: [NgStyle, NgClass],
+  imports: [NgStyle, NgClass, UpperCasePipe, TitleCasePipe, DatePipe, DecimalPipe, PercentPipe],
   templateUrl: './comp1.html',
   styleUrl: './comp1.scss',
 })
 export class Comp1 implements OnInit{
+
+  constructor(private snapsService: FaceSnapsService) {
+  }
+
   @Input() faceSnap!: FaceSnap;
 
   snapButton!: string;
@@ -21,11 +26,11 @@ export class Comp1 implements OnInit{
 
   onAddSnap() :void{
     if(this.snapOrNot === false){
-      this.faceSnap.addSnap();
+      this.snapsService.snapFaceById(this.faceSnap.id,'snap');
       this.snapOrNot = true;
       this.snapButton = "UnSnap";
     }else{
-      this.faceSnap.delSnap();
+      this.snapsService.snapFaceById(this.faceSnap.id,'unsnap');
       this.snapOrNot = false;
       this.snapButton = "snaps";
     }

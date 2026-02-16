@@ -1,6 +1,9 @@
 <div class="face-snap-card" [ngClass]="{snapped: snapOrNot}">
-<H2>{{faceSnap.title}}</H2>
+<H2>{{faceSnap.title | titlecase}}</H2>
 <p>{{faceSnap.description}}</p>
+  <p>FaceSnap crée le : {{faceSnap.createdAt |date : 'dd/MM/yy'}}</p>
+  <p>{{ 4346234.36 | number:'1.0-0'}}</p>
+  <p>{{ 0.4536 | percent}}</p>
 <img [src]="faceSnap.url">
 @if (faceSnap.location) {
   <p>{{faceSnap.location}}</p>
