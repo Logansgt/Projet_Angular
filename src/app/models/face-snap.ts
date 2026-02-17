@@ -1,4 +1,5 @@
 import {SnapType} from './snap-type.type';
+import {FormControl, FormGroup} from '@angular/forms';
 
 export class FaceSnap {
 

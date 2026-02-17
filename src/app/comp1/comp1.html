@@ -1,4 +1,8 @@
 <div class="face-snap-card">
 <H2>{{faceSnap.title | titlecase}}</H2>
+  <label for="choixTitre">
+    Titre choisi :
+    <input id ="choix" type ="text" [(ngModel)]="faceSnap.title">
+  </label>
   <button (click)="onview()">View</button>
 </div>
