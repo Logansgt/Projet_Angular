@@ -1,5 +1,5 @@
 <div class="face-snap-card" [ngClass]="{snapped: snapOrNot}">
-<H2>{{faceSnap.title | titlecase}}</H2>
+<H2>{{faceSnap.title | titlecase | Pipetest}}</H2>
   <a routerLink="/facesnaps">Back</a>
 <p>{{faceSnap.description}}</p>
   <p>FaceSnap crée le : {{faceSnap.createdAt |date : 'dd/MM/yy'}}</p>

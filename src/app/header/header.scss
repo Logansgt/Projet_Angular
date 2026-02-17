@@ -1,7 +1,9 @@
 header {
   text-align: center;
-  background-color: #EEE;
+  border: 1px;
+  border-radius: 10px;
   margin-bottom: 20px;
+  box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
   padding: 10px;
 }
 
@@ -35,4 +37,12 @@ button {
     transform: translate(1px, 1px);
     box-shadow: lightgray 0 0 5px;
   }
+}
+
+h1{
+
+  text-align: center;
+  color: #333333;
+  text-decoration: underline;
+
 }

@@ -31,8 +31,8 @@ export class HubPage {
   public handleSubmit(): void {
     const email = this.profileForm.value.email;
 
-    this.userService.getUsers().subscribe(users => {
-      const present = users.some(u => u.email === email);
+    this.userService.getUsers().subscribe(users => { // Je subscribe pour voir les changements
+      const present = users.some(u => u.email === email); // On check juste la présence
 
       if (!present) {
         throw new Error("L'utilisateur n'est pas dans la base");

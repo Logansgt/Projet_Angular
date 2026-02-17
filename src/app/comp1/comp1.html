@@ -1,8 +1,12 @@
-<div class="face-snap-card">
-<H2>{{faceSnap.title | titlecase}}</H2>
+<div class="face-snap-card" (click)="onview()">
+  <div class="verticalBox">
+    <h2>{{ faceSnap.title | titlecase }}</h2>
+    <div class = horizontal>
   <label for="choixTitre">
     Titre choisi :
-    <input id ="choix" type ="text" [(ngModel)]="faceSnap.title">
+    <input id="choix" type="text" [(ngModel)]="faceSnap.title">
   </label>
-  <button (click)="onview()">View</button>
+    </div>
+  </div>
+  <div class="banner" [ngStyle]="{'background-image': 'url(' + faceSnap.url + ')'}"></div>
 </div>

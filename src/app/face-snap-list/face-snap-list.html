@@ -1,3 +1,9 @@
-@for(f of facesSnap; track f.title){
+  <input type = "number" placeholder="Filtrer par snaps" #filter>
+  <button (click)="filtrerRes(Number.parseInt(filter.value))">Filtrer</button>
+  <br>
+  <input type = "text" placeholder="Filtrer par nom" #filterNom>
+  <button (click)="filtrerResNom($event, filterNom.value)">Filtrer</button>
+
+@for(f of filteredfacesSnap; track f.title){
   <app-comp1 [faceSnap]="f" />
 }

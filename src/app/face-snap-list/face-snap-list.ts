@@ -12,10 +12,32 @@ import {FaceSnapsService} from '../services/face-snaps.service';
 export class FaceSnapList implements OnInit{
 
   facesSnap!: FaceSnap[];
+  filteredfacesSnap!: FaceSnap[];
 
   constructor(private faceSnapsService: FaceSnapsService) {}
 
   ngOnInit() {
     this.facesSnap = this.faceSnapsService.getSnapFaces();
+    this.filteredfacesSnap = this.facesSnap;
   }
+
+  filtrerRes(nb: number) {
+    if(!nb){
+      this.filteredfacesSnap = this.facesSnap;
+    }else{
+      this.filteredfacesSnap = this.faceSnapsService.getSnapFaces().filter(elt => elt.snaps > nb);
+    }
+  }
+
+
+  filtrerResNom(event: Event, value: string) {
+    event.stopPropagation();
+    if(!value || value === '') {
+      this.filteredfacesSnap = this.facesSnap;
+    }else{
+      this.filteredfacesSnap = this.faceSnapsService.getSnapFaces().filter(elt => elt.title.toLowerCase().includes(value.toLowerCase()));
+    }
+  }
+
+  protected readonly Number = Number;
 }
