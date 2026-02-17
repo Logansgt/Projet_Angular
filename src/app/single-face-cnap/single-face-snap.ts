@@ -1,4 +1,4 @@
-import {Component, Input, OnInit} from '@angular/core';
+import  {Component, Input, OnInit} from '@angular/core';
 import {FaceSnap} from '../models/face-snap';
 import {DatePipe, DecimalPipe, NgClass, NgStyle, PercentPipe, TitleCasePipe, UpperCasePipe} from '@angular/common';
 import {FaceSnapsService} from '../services/face-snaps.service';

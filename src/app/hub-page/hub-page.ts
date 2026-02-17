@@ -13,9 +13,12 @@ import {Observable} from 'rxjs';
 })
 export class HubPage {
 
+  users!: Observable<User[]>;
+
+
   profileForm = new FormGroup({
-    name: new FormControl('',Validators.required),
-    email: new FormControl('',[Validators.required, Validators.email]),
+    name: new FormControl('', Validators.required),
+    email: new FormControl('', [Validators.required, Validators.email]),
   })
 
   constructor(private router: Router, private userService: UserService) {
@@ -24,22 +27,18 @@ export class HubPage {
   onContinue(): void {
     this.router.navigateByUrl('facesnaps');
   }
-  public handleSubmit():void {
-    const present = this.users.find(e => e.email = this.profileForm.value.email);
-    if(!present) {
-      throw new Error("L'utilisateur n'est pas dans la base");
-    }else{
-      this.onContinue();
-    }
-  }
 
-  users!: Observable<User[]>;
+  public handleSubmit(): void {
+    const email = this.profileForm.value.email;
 
-  ngOnInit(): void {
     this.userService.getUsers().subscribe(users => {
-      users.map(u => { u.email == this.profileForm.value.email; });
-      }); // Attendre l'objet observable
+      const present = users.some(u => u.email === email);
+
+      if (!present) {
+        throw new Error("L'utilisateur n'est pas dans la base");
+      } else {
+        this.onContinue();
+      }
     });
   }
-
 }

@@ -1,0 +1,484 @@
+\documentclass[a4paper,11pt]{article} % Type de papier et taille police
+
+\usepackage[T1]{fontenc}
+\usepackage[french]{babel}
+\usepackage{graphicx}
+\usepackage{lmodern}
+\usepackage[utf8]{inputenc}
+\usepackage{parskip}
+\usepackage{enumitem}  % énumération de points
+
+\usepackage{listings} %pour afficher du code source
+\usepackage{xcolor}
+
+\usepackage{graphicx}%Insertion d'image
+
+% Configuration du style du code
+\lstset{
+    language=Python,                % Langage par défaut
+    basicstyle=\ttfamily\small,    % Police à chasse fixe
+    stringstyle=\color{red},       % Couleur des chaînes
+    keywordstyle=[1]\color{blue},     % Couleur des mots-clés de la catégorie 1
+    keywordstyle=[2]\color{orange},    % Couleur des mots-clés de la catégorie 2
+    keywordstyle=[3]\color{magenta},    % Couleur des mots-clés de la catégorie 3
+    keywordstyle=[4]\color{green!60!black},    % Couleur des mots-clés de la catégorie 4
+    commentstyle=\color{green!40!black}, % Couleur des commentaires
+    numbers=left,                  % Numéros de ligne à gauche
+    numberstyle=\tiny\color{gray}, % Style des numéros
+    frame=single,                  % Cadre autour du code
+    breaklines=true                % Retour à la ligne automatique
+}
+
+
+% Définition du javaScript pour les affichages
+
+\lstdefinelanguage{TypeScript}{
+  morekeywords=[1]{export, class, let, var, const, function, return,this}, % bleu
+  morekeywords=[2]{string, number, Date, void, boolean}, % orange
+  morekeywords=[3]{import, implements, interface, Component, selector,constructor, true, false}, % rose
+  morekeywords=[4]{public,private}, %vert
+  sensitive=true,
+  morecomment=[l]{//},
+  morecomment=[s]{/*}{*/},
+  morestring=[b]",
+  morestring=[b]'
+}
+
+%Info document
+\title{Tutoriel d'utilisation du framework Angular}
+\author{ Logan SAGET }
+\date{30/01/2026}
+
+\begin{document}
+
+
+
+\maketitle % Affiche le titre défini plus haut
+\tableofcontents % Génère la table des matières automatiquement
+\newpage   % Saut de page
+
+%Section numéro 1
+
+\section{\underline{Initialisation d'un projet :}} %déclaration d'une section
+
+
+\subsection{Commandes utiles à la création d'un projet (dans le dossier voulu) :} %déclaration d'un paragraphe
+
+
+%lstlising est utilisé pour écrire du code, on peut préciser le langage
+\begin{lstlisting} [language=bash]
+    ng new [nomProjet]
+    // Ou encore
+    ng new [nomProjet] 
+         --style=scss  // Langage du style
+         --skip-tests=true
+
+    cd nomProjet
+    ng serve // Lancement du serveur
+\end{lstlisting}
+
+\newpage
+
+%Section numéro 2
+
+
+\section{\underline{Bases d'un projet Angular : }}
+
+\subsection{Création et utilisation d'un composant :}
+
+Génération automatique :
+
+\begin{lstlisting} [language=bash]
+    ng generate component page-accueil
+\end{lstlisting}
+
+Cette commande génère 3 fichiers :
+
+%énumération de points
+\begin{itemize}[label=\textbullet, left=1em]
+  \item fichier HTML
+  \item fichier de style
+  \item fichier de script
+\end{itemize}
+
+Dans le fichier script on peut retrouver la classe qui défini ce composant :
+
+\begin{lstlisting}[language=TypeScript]
+import { Component } from '@angular/core';
+
+@Component({
+    selector: 'app-test',
+    imports: [],
+    templateUrl: './test.html',
+    styleUrls: ['./test.scss'],
+})
+
+export class Test {
+
+}   
+\end{lstlisting}
+
+On pourra bien sûr rajouter des lignes dans cette classe (comme des attributs par exemple).
+
+\begin{lstlisting}[language=TypeScript]
+export class Comp1{
+  title!: string;
+  description!: string;
+  createdAt!: Date;
+  snaps!: number;
+}  
+\end{lstlisting}
+
+\newpage
+
+Afin d'initialiser ces attributs (dès l'appel du composant), on implémente l'interface OnInit :
+
+\begin{lstlisting}[language=TypeScript]
+export class Comp1 implements OnInit{
+  title!: string;
+  description!: string;
+  createdAt!: Date;
+  snaps!: number;
+
+  ngOnInit(): void {
+    this.title = "premierComposant";
+    this.description = "premierComposant";
+    this.createdAt = new Date();
+    this.snaps = 0;
+  }
+}
+\end{lstlisting}
+
+Une fois initialisée, on peut utiliser ces variables dans le fichier.html du composant :
+
+\begin{lstlisting}[language=HTML]
+<H2>{{title}}</H2>
+<p>{{description}}</p>
+\end{lstlisting}
+
+Ce qui donnera : 
+\begin{center} %centrer
+    \fbox{\includegraphics[width=10cm]{images/rendu1Composant.png}}
+\end{center}
+
+Pour ajouter une image, on la défini d'abbord comme nouvel attribut, puis on utilise une balise src entre "[]" :
+
+\begin{lstlisting}[language=HTML]
+<img [src]="url"> <!-- url etant un attribut defini dans componant.js -->
+\end{lstlisting}
+
+\newpage
+\subsection{Personnalisation des composants :}
+
+Dans un premier lieu, on crée un package dans l'application dans lequel on va ajouter des classes :
+
+\begin{center} %centrer
+    \fbox{\includegraphics[width=10cm]{images/premiereClasse.png}}
+\end{center}
+
+
+Dans cette classe, on défini les attributs qui se trouvaient initialement dans le fichier ts du composant.
+
+\begin{lstlisting}[language=TypeScript]
+export class FaceSnap {
+  constructor(public title: string,
+              public description: string,
+              public createdAt: Date,
+              public snaps: number,
+              public url: string) {}
+      }
+\end{lstlisting}
+
+Dans le fichier "app.ts", nous allons maintenant déclarer des objets de type FaceSnap :
+
+\begin{lstlisting}[language=TypeScript]
+export class App implements OnInit {
+
+  snap1!: FaceSnap;
+  snap2!: FaceSnap;
+  snap3!: FaceSnap;
+
+  ngOnInit() {
+    this.snap1 = new FaceSnap("premierComposant","premierComposant",new Date(),0,url);
+    this.snap2 = new FaceSnap("2emeComposant","2emeComposant",new Date(),10,url);
+    this.snap3 = new FaceSnap("3emeComposant","3emeComposant",new Date(),100,url);
+  }
+}
+\end{lstlisting}
+
+\newpage
+
+Une fois la classe crée, on peut retirer les attributs du composant et simplement crée un objet de type FaceSnap :
+
+\begin{lstlisting}[language=TypeScript]
+export class Comp1 implements OnInit{
+  @Input() faceSnap!: FaceSnap;
+}
+\end{lstlisting}
+
+Enfin, on peut appeler nos composants dans l'html de l'application en initialisant l'attribut crée :
+
+\begin{lstlisting}[language=HTML]
+<app-comp1 [faceSnap]="snap1"></app-comp1>
+
+<app-comp1 [faceSnap]="snap2"></app-comp1>
+
+<app-comp1 [faceSnap]="snap3"></app-comp1>
+\end{lstlisting}
+
+Avec cette manipulation, on peut personnaliser nos composants.
+
+Il ne faut pas oublier dans le html du composant de remplacer les appels avec faceSnap.attribut :
+
+\begin{lstlisting}[language=HTML]
+<H2>{{faceSnap.title}}</H2>
+<p>{{faceSnap.description}}</p>
+<img [src]="faceSnap.url">
+\end{lstlisting}  
+
+\newpage
+
+
+%Section numéro 3
+
+\section{\underline{Gestion des événements : }}
+
+La gestion des événements est beaucou plus simple grâce à angular.
+Il suffit de créer dans le TypeScript du composant des actions. Par exemple, on veut pouvoir liker un post et retirer le like :
+
+\begin{lstlisting}[language=TypeScript]
+export class Comp1 implements OnInit{
+  @Input() faceSnap!: FaceSnap;
+
+  snapButton!: string;
+  snapOrNot!: boolean;
+
+  ngOnInit(): void {
+    this.snapOrNot = false;
+    this.snapButton = "snaps"
+  }
+
+  onAddSnap() :void{
+    if(this.snapOrNot === false){
+      this.faceSnap.addSnap();
+      this.snapOrNot = true;
+      this.snapButton = "UnSnap";
+    }else{
+      this.faceSnap.delSnap();
+      this.snapOrNot = false;
+      this.snapButton = "snaps";
+    }
+  }
+}
+\end{lstlisting}
+
+Enfin, on lie cet évènement à un bouton, ici, on parle de l'évènement "click", qu'on va donc écrire entre parenthèse dans la balise du bouton pour le définir :
+
+\begin{lstlisting}[language=HTML]
+<p>
+  <button (click)="onAddSnap()">{{snapButton}}</button>
+  {{faceSnap.snaps}}
+</p>
+\end{lstlisting}
+
+\newpage
+
+
+%Section numéro 4
+
+\section{\underline{Mise en place d'un service :}}
+
+\subsection{Création du service :}
+
+La mise en place d'un service est utile afin de regrouper les méthodes qui seront utiles à plusieurs composants. On les utilise aussi afin de faire appel à des API.
+
+On définit un service de la manière suivante :
+
+\begin{lstlisting}[language=TypeScript]
+    @Injectable({
+  providedIn: 'root'
+})
+export class FaceSnapsService {
+  private faceSnaps: FaceSnap[] = [
+    new FaceSnap("premierComposant", "premierComposant", new Date(), 0)
+    new FaceSnap("2emeComposant", "2emeComposant", new Date(), 10)
+    new FaceSnap("3emeComposant", "3emeComposant", new Date(), 100)
+  ];
+}
+
+\end{lstlisting}
+
+\subsection{Utilisation d'un service :}
+
+En utilisant la propriété injectable, on peut l'utiliser dans les différentes classes en l'injectant dans les constructeurs :
+
+
+\begin{lstlisting}[language=TypeScript]
+
+  Export class SingleFaceSnap{
+   constructor(private snapsService: FaceSnapsService)
+  }
+
+\end{lstlisting}
+
+Dans notre exemple, notre service possède des méthodes afin de trouver via un id un snap :
+\newpage
+
+\begin{lstlisting}[language=TypeScript]
+    @Injectable({
+  providedIn: 'root'
+})
+export class FaceSnapsService {
+  private faceSnaps: FaceSnap[] = [
+    new FaceSnap("premierComposant", "premierComposant", new Date(), 0)
+    new FaceSnap("2emeComposant", "2emeComposant", new Date(), 10)
+    new FaceSnap("3emeComposant", "3emeComposant", new Date(), 100)
+  ];
+
+    getSnapFaces(): FaceSnap[] {
+      return [...this.faceSnaps] // Pour retourner un tableau independant meme si il a les memes references
+  }
+
+  getSnapById(id: string): FaceSnap {
+    const trouverSnap = this.faceSnaps.find(FaceSnap => FaceSnap.id === id );
+    if (!trouverSnap) {
+      throw new Error("No snap found with ID " + id);
+    }else{
+      return trouverSnap;
+    }
+  }
+
+  snapFaceById(faceSnapId: string, snapType: SnapType) {
+      const trouverSnap = this.getSnapById(faceSnapId);
+      trouverSnap.snap(snapType);
+    }
+}
+
+\end{lstlisting}
+
+
+Afin d'utiliser la méthode getSnapById, on va simplement injecté le service dans la classe ou l'on veut l'utiliser, puis l'appeler :
+
+
+\begin{lstlisting}[language=TypeScript]
+
+  export class SingleFaceSnap implements OnInit{
+
+  constructor(private snapsService: FaceSnapsService) {
+  }
+
+  faceSnap!: FaceSnap;
+
+  ngOnInit(): void { 
+    this.faceSnap = this.snapsService.getSnapById(faceSnapId);
+  }
+
+  }
+
+\end{lstlisting}
+
+\section{\underline{Navigation et routes :}}
+
+\subsection{Définition des routes :}
+
+Dans le fichier routes de l'application, on retrouve un tableau de Routes. On va y insérer toutes les routes de notre application : 
+
+\begin{lstlisting}[language=TypeScript]
+  
+export const routes: Routes = [
+  {path: 'facesnaps', component: FaceSnapList}, // route qui va afficher le contenu de FaceSnapList
+  {path: '', component: HubPage}, // route vide, donc le hub
+];
+
+\end{lstlisting}
+
+Ensuite, dans notre app.ts, on va pouvoir importer "RouterOutlet".
+Grâce à ceci, il sera possible dans le HTML de définir, au lieu d'un composant précis, l'objet qui se trouve à l'emplacement de la route dans l'url :
+
+
+\begin{lstlisting}[language=HTML]
+<app-header/>
+<router-outlet/> // Le composant trouve a cette route
+\end{lstlisting}
+
+\subsection{Naviger entre les composants :}
+
+Pour naviguer, il suffit d'utiliser routerLink (qu'on oublie pas d'importer dans le .ts de la où on l'utilise).
+Par exemple, avec un composant header : 
+
+\begin{lstlisting}[language=HTML]
+
+<header>
+  <p>Application</p>
+  <nav>
+    <button routerLink="" routerLinkActive="active" [routerLinkActiveOptions]="{exact: true}">HomePage</button>
+    <button routerLink="facesnaps" routerLinkActive="active">App</button>
+  </nav>
+</header>
+
+\end{lstlisting}
+
+Ici, routerLinkActive sert à donné la classe active à l'élément dont la route est celle selectionnée.
+
+\newpage
+
+Maintenant, on peut naviguer dans la pages sans problème entre le hub et l'app : 
+
+\begin{center}
+    \fbox{\includegraphics[width=13cm]{images/renduAvecRoutes.png}}
+\end{center}
+
+\subsection{Accéder à un élément en particulier :}
+
+Il est possible dans les routes de définir une variable qui changera : 
+
+\begin{lstlisting}[language=TypeScript]
+  
+export const routes: Routes = [
+  // La route avec l'id du snap afficher
+  {path: 'facesnaps/:id', component: SingleFaceSnap},
+  {path: 'facesnaps', component: FaceSnapList},
+  {path: '', component: HubPage},
+];
+
+\end{lstlisting}
+
+Grâce aux méthodes pour récupérer un snap via un id, on peut dans une classe qui reprends nos snap (copié collé de Comp1) faire :
+
+\begin{lstlisting}[language=TypeScript]
+  
+constructor(private snapsService: FaceSnapsService,
+  private route: ActivatedRoute) {
+  }
+
+  faceSnap!: FaceSnap;
+
+  ngOnInit(): void {
+    const faceSnapId = this.route.snapshot.params['id']; // Recup le face snap qui correspond a l'id dans l'url
+    this.faceSnap = this.snapsService.getSnapById(faceSnapId); // On va recup le faceSnap qui correspond a cette id pour l'afficher
+  }
+
+\end{lstlisting}
+
+Il ne manque plus qu'un moyen de mettre l'id du face snap dans l'url, j'utilise un bouton lié par un événement à cette méthode dans Comp1 : 
+
+
+\begin{lstlisting}[language=TypeScript]
+  
+constructor(private router: Router){}
+
+  @Input() faceSnap!: FaceSnap; // Accepte une valeur qui vient du parent
+
+  protected onview() {
+   this.router.navigateByUrl('facesnaps/'+this.faceSnap.id); // Methode pour inclure l'id choisi dans l'url
+  }
+
+\end{lstlisting}
+
+On peut maintenant choisir quel composant regarder en cliquant sur le bouton view : 
+
+\begin{center}
+    \fbox{\includegraphics[width=13cm]{images/renduComposantParId.png}}
+\end{center}
+
+\end{document}
