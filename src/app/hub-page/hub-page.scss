@@ -1,32 +1,102 @@
+/* Container général */
 .landing-block {
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-}
-
-.landing-links {
-  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  min-height: 100vh;
+  background: #fff; /* fond blanc */
+  color: #2c2c2c; /* texte sombre */
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  padding: 2rem;
   text-align: center;
 }
 
-button {
-  background-color: transparent;
-  box-sizing: border-box;
-  padding: 5px 10px;
-  border: none;
-  box-shadow: lightgray 3px 3px 7px;
-  margin-top: 10px;
+/* Titre avec typewriter */
+.landing-block h1 {
+  font-size: 3rem;
+  font-weight: 700;
+  margin-bottom: 2rem;
+  color: #5b2cbf; /* violet doux */
+  letter-spacing: 1px;
+  text-shadow: 1px 1px 4px rgba(91, 44, 191, 0.2);
+}
+
+/* Image logo */
+.landing-block img {
+  width: 100px;
+  height: auto;
+  margin-bottom: 2rem;
+  border-radius: 10px;
+  box-shadow: 0 4px 12px rgba(91, 44, 191, 0.15);
+  transition: transform 0.3s ease;
+}
+
+.landing-block img:hover {
+  transform: scale(1.05);
+}
+
+/* Formulaire */
+.landing-block form {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  width: 100%;
+  max-width: 360px;
+}
+
+/* Inputs */
+.landing-block input {
+  padding: 0.6rem 1rem;
+  border-radius: 8px;
+  border: 1px solid #d1c4f0; /* violet très clair */
+  background: #fff;
+  color: #2c2c2c;
+  font-size: 1rem;
+  transition: border 0.3s ease, box-shadow 0.3s ease;
+}
+
+/* Quand je la select */
+.landing-block input:focus {
   outline: none;
-  font-size: 14px;
-  font-weight: 500;
-
-  &:active {
-    transform: translate(1px, 1px);
-    box-shadow: lightgray 0 0 5px;
-  }
+  border-color: #5b2cbf;
+  box-shadow: 0 0 8px rgba(91, 44, 191, 0.2);
 }
 
-input{
-  margin: 10px 10px 10px 10px;
+/* Bouton */
+.landing-block button {
+  padding: 0.6rem 1rem;
+  border: none;
+  border-radius: 8px;
+  background: #5b2cbf; /* violet doux */
+  color: #fff;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background 0.3s ease, transform 0.2s ease, box-shadow 0.3s ease;
+  box-shadow: 0 4px 12px rgba(91, 44, 191, 0.15);
 }
+
+.landing-block button:disabled {
+  background: #c7b7f0;
+  cursor: not-allowed; // Pour désactiver la souris
+  box-shadow: none;
+}
+
+
+/* Curseur après le bloc h1 */
+.landing-block h1::after {
+  content: '|';
+  display: inline-block;
+  margin-left: 4px;
+  color: #5b2cbf;
+  animation: blink 4s infinite; // On l'a défini après
+}
+
+// Animation blink
+
+@keyframes blink {
+  0%, 50%,100% { opacity: 1; } // apparition progressive
+  25%, 75% { opacity: 0; } // Fondu
+}
+
+

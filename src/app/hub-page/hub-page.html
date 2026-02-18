@@ -1,4 +1,5 @@
 <div class="landing-block">
+  <h1>{{afficheBvn}}</h1>
   <img ngSrc="./assets/snapface-logo.png" alt="Snapface logo">
   <form [formGroup]="profileForm" (ngSubmit)="handleSubmit()">
     <input type="text" formControlName="name" />
