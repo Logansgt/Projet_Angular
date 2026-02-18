@@ -13,10 +13,11 @@ import {
 import {FaceSnapsService} from '../services/face-snaps.service';
 import {Router, RouterLink} from '@angular/router';
 import {FormControl, FormGroup, FormsModule, ReactiveFormsModule, Validators} from '@angular/forms';
+import {InputText} from 'primeng/inputtext';
 
 @Component({
   selector: 'app-comp1',
-  imports: [NgClass, TitleCasePipe, RouterLink, FormsModule, ReactiveFormsModule, NgOptimizedImage, NgStyle],
+  imports: [NgClass, TitleCasePipe, RouterLink, FormsModule, ReactiveFormsModule, NgOptimizedImage, NgStyle, InputText],
   templateUrl: './comp1.html',
   styleUrl: './comp1.scss',
 })

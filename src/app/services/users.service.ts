@@ -9,8 +9,7 @@ export class UserService {
 
 
   private users$: User[] = [
-    { nom: 'Dupont', email: 'Dupont@gmail.com'},
-    { nom: 'Logan', email: 'saget.logan@gmail.com'},
+    { email: 'saget.logan@gmail.com', pwd: 'Test123_'},
   ];
 
   private nbUsers =  this.users$.length;
@@ -23,5 +22,9 @@ export class UserService {
 
   getnbUsers(): number{
     return this.nbUsers;
+  }
+
+  addUser(user: { email: string | null | undefined; pwd: string | null | undefined }) {
+    this.users$.push(<User>user);
   }
 }

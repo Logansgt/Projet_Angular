@@ -5,7 +5,6 @@
   align-items: center;
   justify-content: center;
   min-height: 100vh;
-  background: #fff; /* fond blanc */
   color: #2c2c2c; /* texte sombre */
   font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
   padding: 2rem;
@@ -50,8 +49,6 @@
   padding: 0.6rem 1rem;
   border-radius: 8px;
   border: 1px solid #d1c4f0; /* violet très clair */
-  background: #fff;
-  color: #2c2c2c;
   font-size: 1rem;
   transition: border 0.3s ease, box-shadow 0.3s ease;
 }
@@ -59,7 +56,6 @@
 /* Quand je la select */
 .landing-block input:focus {
   outline: none;
-  border-color: #5b2cbf;
   box-shadow: 0 0 8px rgba(91, 44, 191, 0.2);
 }
 
@@ -98,5 +94,4 @@
   0%, 50%,100% { opacity: 1; } // apparition progressive
   25%, 75% { opacity: 0; } // Fondu
 }
-
 

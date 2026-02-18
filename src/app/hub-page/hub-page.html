@@ -2,9 +2,10 @@
   <h1>{{afficheBvn}}</h1>
   <img ngSrc="./assets/snapface-logo.png" alt="Snapface logo">
   <form [formGroup]="profileForm" (ngSubmit)="handleSubmit()">
-    <input type="text" formControlName="name" />
-    <input type="email" formControlName="email" />
-    <button type="submit" [disabled]="!profileForm.valid">Continuer vers Snapface</button>
+    <input pInputText type="email" formControlName="email" />
+    <p-password promptLabel="Choose a password" [feedback]="false" [toggleMask]="true" formControlName="pwd"></p-password>
+    <p-button type="submit" [disabled]="!profileForm.valid">Continuer vers Snapface</p-button>
+    <p-button (click)="creerCompte()">Creer Compte</p-button>
   </form>
   <div class="landing-links">
   </div>

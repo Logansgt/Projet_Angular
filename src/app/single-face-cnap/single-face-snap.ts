@@ -4,10 +4,11 @@ import {DatePipe, DecimalPipe, NgClass, NgStyle, PercentPipe, TitleCasePipe, Upp
 import {FaceSnapsService} from '../services/face-snaps.service';
 import {ActivatedRoute, RouterLink} from '@angular/router';
 import {StarPipe} from '../PipeTest';
+import {Button} from 'primeng/button';
 
 @Component({
   selector: 'app-single-face-snap',
-  imports: [NgStyle, NgClass, UpperCasePipe, TitleCasePipe, DatePipe, DecimalPipe, PercentPipe, RouterLink, StarPipe],
+  imports: [NgStyle, NgClass, UpperCasePipe, TitleCasePipe, DatePipe, DecimalPipe, PercentPipe, RouterLink, StarPipe, Button],
   templateUrl: './single-face-snap.html',
   styleUrl: './single-face-snap.scss',
 })

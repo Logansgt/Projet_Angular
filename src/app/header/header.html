@@ -2,7 +2,8 @@
 <header>
   <h1>Application</h1>
   <nav>
-    <button routerLink="" routerLinkActive="active" [routerLinkActiveOptions]="{exact: true}">HomePage</button>
-    <button routerLink="facesnaps" routerLinkActive="active">App</button>
+    <p-button routerLink="" routerLinkActive="active" [routerLinkActiveOptions]="{exact: true}">HomePage</p-button>
+    <p-button routerLink="facesnaps" routerLinkActive="active">App</p-button>
+    <p-toggleswitch [(ngModel)]="modeSombre" (click)="toggleDarkMode()" [dt]="switchLight"/>
   </nav>
 </header>

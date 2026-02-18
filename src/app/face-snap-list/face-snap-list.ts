@@ -2,10 +2,12 @@ import {Component, OnInit} from '@angular/core';
 import {FaceSnap} from '../models/face-snap';
 import {Comp1} from '../comp1/comp1';
 import {FaceSnapsService} from '../services/face-snaps.service';
+import {Button} from 'primeng/button';
+import {InputTextModule} from 'primeng/inputtext';
 
 @Component({
   selector: 'app-face-snap-list',
-  imports: [Comp1],
+  imports: [Comp1, Button, InputTextModule],
   templateUrl: './face-snap-list.html',
   styleUrl: './face-snap-list.scss',
 })
