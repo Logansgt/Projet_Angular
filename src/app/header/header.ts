@@ -6,16 +6,18 @@ import {ToggleSwitch} from 'primeng/toggleswitch';
 import {FormsModule} from '@angular/forms';
 import {colorScheme} from '@primeuix/themes/aura/tag';
 import {PrimeNG} from 'primeng/config';
+import {ColorPicker} from 'primeng/colorpicker';
 
 @Component({
   selector: 'app-header',
-  imports: [RouterLink, RouterLinkActive, Button, Avatar, ToggleSwitch, FormsModule],
+  imports: [RouterLink, RouterLinkActive, Button, Avatar, ToggleSwitch, FormsModule, ColorPicker],
   templateUrl: './header.html',
   styleUrl: './header.scss',
 })
 export class Header implements OnInit {
 
   modeSombre = false;
+  color!: string;
   constructor(private primeng :PrimeNG) {
   }
 
@@ -29,6 +31,7 @@ export class Header implements OnInit {
 
   ngOnInit() {
     this.primeng.ripple.set(true);
+    this.color = "#FFFFF";
   }
 
   switchLight = {
@@ -49,5 +52,6 @@ export class Header implements OnInit {
       }
     }
   };
+
 
 }

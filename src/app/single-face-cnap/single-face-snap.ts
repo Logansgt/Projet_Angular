@@ -5,10 +5,12 @@ import {FaceSnapsService} from '../services/face-snaps.service';
 import {ActivatedRoute, RouterLink} from '@angular/router';
 import {StarPipe} from '../PipeTest';
 import {Button} from 'primeng/button';
+import {Checkbox} from 'primeng/checkbox';
+import {FormsModule} from '@angular/forms';
 
 @Component({
   selector: 'app-single-face-snap',
-  imports: [NgStyle, NgClass, UpperCasePipe, TitleCasePipe, DatePipe, DecimalPipe, PercentPipe, RouterLink, StarPipe, Button],
+  imports: [NgStyle, NgClass, UpperCasePipe, TitleCasePipe, DatePipe, DecimalPipe, PercentPipe, RouterLink, StarPipe, Button, Checkbox, FormsModule],
   templateUrl: './single-face-snap.html',
   styleUrl: './single-face-snap.scss',
 })
@@ -21,10 +23,14 @@ export class SingleFaceSnap implements OnInit{
   faceSnap!: FaceSnap;
   snapButton!: string;
   snapOrNot!: boolean;
+  Nombre!: boolean;
+  Pourcent !: boolean;
 
   ngOnInit(): void {
     this.snapOrNot = false;
-    this.snapButton = "snaps"
+    this.snapButton = "snaps";
+    this.Pourcent = false;
+    this.Nombre = false;
 
     const faceSnapId = this.route.snapshot.params['id']; // Récup le face snap qui correspond a l'id dans l'url
     this.faceSnap = this.snapsService.getSnapById(faceSnapId); // On va récup le faceSnap qui correspond a cette id pour l'afficher

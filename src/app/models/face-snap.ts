@@ -1,5 +1,6 @@
 import {SnapType} from './snap-type.type';
 import {FormControl, FormGroup} from '@angular/forms';
+import {Rating} from 'primeng/rating';
 
 export class FaceSnap {
 
@@ -8,9 +9,11 @@ export class FaceSnap {
 
   constructor(public title: string,
               public description: string,
+              public prix:number,
               public createdAt: Date,
               public snaps: number,
-              public url: string) {
+              public url: string,
+              public rating: number) {
     this.id = crypto.randomUUID();
   }
 
@@ -38,4 +41,5 @@ export class FaceSnap {
       this.setLocation(location);
       return this;
     }
+
 }

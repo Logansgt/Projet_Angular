@@ -2,9 +2,15 @@
   <h1>{{afficheBvn}}</h1>
   <img ngSrc="./assets/snapface-logo.png" alt="Snapface logo">
   <form [formGroup]="profileForm" (ngSubmit)="handleSubmit()">
+    <p-speeddial [model]="items" direction="down" [style]="{ position: 'absolute', top: 'calc(20% - 1rem)', left: '1rem' }" />    <p-iconfield>
+      <p-inputicon class="pi pi-at"></p-inputicon>
     <input pInputText type="email" formControlName="email" />
+    </p-iconfield>
+    <p-iconfield>
+      <p-inputicon class="pi pi-lock"></p-inputicon>
     <p-password promptLabel="Choose a password" [feedback]="false" [toggleMask]="true" formControlName="pwd"></p-password>
-    <p-button type="submit" [disabled]="!profileForm.valid">Continuer vers Snapface</p-button>
+    </p-iconfield>
+      <p-button type="submit" [disabled]="!profileForm.valid">Continuer vers Snapface</p-button>
     <p-button (click)="creerCompte()">Creer Compte</p-button>
   </form>
   <div class="landing-links">

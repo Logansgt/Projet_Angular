@@ -8,6 +8,8 @@ import {FormControl, FormGroup, FormsModule, ReactiveFormsModule, Validators} fr
 import {UserService} from '../services/users.service';
 import {Observable} from 'rxjs';
 import {AsyncPipe} from '@angular/common';
+import {IconField} from 'primeng/iconfield';
+import {InputIcon} from 'primeng/inputicon';
 
 @Component({
   selector: 'app-creer-compte',
@@ -17,7 +19,9 @@ import {AsyncPipe} from '@angular/common';
     Password,
     ReactiveFormsModule,
     FormsModule,
-    AsyncPipe
+    AsyncPipe,
+    IconField,
+    InputIcon
   ],
   templateUrl: './creer-compte.html',
   styleUrl: './creer-compte.scss',

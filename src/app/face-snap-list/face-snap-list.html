@@ -1,9 +1,55 @@
-  <input pInputText type = "number" placeholder="Filtrer par snaps" #filter>
+<div class = filtres>
+<input pInputText type = "number" placeholder="Filtrer par snaps" #filter>
   <p-button (click)="filtrerRes(Number.parseInt(filter.value))">Filtrer</p-button>
   <br>
-  <input pInputText type = "text" placeholder="Filtrer par nom" #filterNom>
-  <p-button (click)="filtrerResNom($event, filterNom.value)">Filtrer</p-button>
+  <p-iconfield>
+    <p-inputicon class="pi pi-search" />
+  <p-autoComplete [(ngModel)]="filtrerNom" [dropdown]="true" [suggestions]="items" (completeMethod)="search($event)"  inputId="labelF" #filterName/>
+  <p-splitbutton label= "filtrer" (click)="filtrerResNom($event, filterName.value)" [model]="items2">Filtrer</p-splitbutton>
+  </p-iconfield>
+  <div class="toggle-container">
+    <p-button
+      [icon]="VueTable ? 'pi pi-list' : 'pi pi-info-circle'"
+      (click)="VueTable = !VueTable"
+      [rounded]="true"
+      [text]="true">
+    </p-button>
+  </div>
+</div>
 
-@for(f of filteredfacesSnap; track f.title){
-  <app-comp1 [faceSnap]="f" />
+@if (VueTable === true) {
+  @for(f of getPaginatedSnaps(); track f.id){
+    <app-comp1 [faceSnap]="f" />
+
+  }
+  <p-paginator (onPageChange)="onPageChange($event)" [first]="0" [rows]="3" [totalRecords]="filteredfacesSnap.length"></p-paginator>
+}@else{
+  <p-table [value]="filteredfacesSnap" dataKey="id" [paginator]="true" [rows]="3" sortField="title">
+    <ng-template pTemplate="header">
+      <tr>
+        <th pSortableColumn="title">
+          Titre
+          <p-sortIcon field="title"/>
+        </th>
+        <th>Image</th>
+        <th pSortableColumn="prix">
+          Prix
+          <p-sortIcon field="prix"/>
+          </th>
+        <th>Date</th>
+        <th>Rating</th>
+      </tr>
+    </ng-template>
+    <ng-template pTemplate="body" let-product>
+      <tr>
+        <td>{{ product.title }}</td>
+        <td><img [src]="product.url" class="table-img"></td>
+        <td>{{ product.prix | dolarPipe }}</td>
+        <td>{{ product.createdAt | date: 'dd/MM/yy' }}</td>
+        <td><p-rating [(ngModel)]="product.rating" [readonly]="true"></p-rating></td>
+        <td><p-button icon="pi pi-search" (click)="onview(product.id)"></p-button></td>
+      </tr>
+    </ng-template>
+  </p-table>
+
 }

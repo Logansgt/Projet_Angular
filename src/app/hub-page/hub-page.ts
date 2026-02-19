@@ -9,10 +9,14 @@ import {PrimeNG} from 'primeng/config';
 import {Button} from 'primeng/button';
 import {InputText} from 'primeng/inputtext';
 import {Password, PasswordDirective} from 'primeng/password';
+import {IconField} from 'primeng/iconfield';
+import {InputIcon} from 'primeng/inputicon';
+import {SpeedDial} from 'primeng/speeddial';
+import {MenuItem, MenuItemCommandEvent} from 'primeng/api';
 
 @Component({
   selector: 'app-hub-page',
-  imports: [RouterLink, FormsModule, ReactiveFormsModule, AsyncPipe, Button, InputText, PasswordDirective, Password],
+  imports: [RouterLink, FormsModule, ReactiveFormsModule, AsyncPipe, Button, InputText, PasswordDirective, Password, IconField, InputIcon, SpeedDial],
   templateUrl: './hub-page.html',
   styleUrl: './hub-page.scss',
 })
@@ -26,6 +30,7 @@ export class HubPage implements OnInit {
     email: new FormControl('', [Validators.required, Validators.email]),
     pwd: new FormControl('', Validators.required)
   })
+  protected items!: MenuItem[];
 
   constructor(private router: Router, private userService: UserService, private cd: ChangeDetectorRef, private primeng :PrimeNG) {
   }
@@ -55,6 +60,27 @@ export class HubPage implements OnInit {
         this.cd.detectChanges();
       }
     }
+
+    this.items = [
+      {
+        icon : 'pi pi-globe',
+        command:()=>{
+          this.onContinue();
+        }
+      },
+      {
+        icon : 'pi pi-user',
+        command:()=>{
+          this.creerCompte();
+        }
+      },
+      {
+        icon: 'pi pi-spin pi-cog ',
+        command: () => {
+          this.creerCompte();
+        }
+      }
+    ];
 
     const subscriber = this.obsBienvenu$.subscribe(affichage);
 
