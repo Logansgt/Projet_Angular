@@ -4,7 +4,6 @@
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  min-height: 100vh;
   color: #2c2c2c; /* texte sombre */
   font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
   padding: 2rem;
@@ -19,6 +18,23 @@
   color: #5b2cbf; /* violet doux */
   letter-spacing: 1px;
   text-shadow: 1px 1px 4px rgba(91, 44, 191, 0.2);
+}
+
+.landing-block h2 {
+  font-size: 2rem;
+  font-weight: 700;
+  margin-bottom: 2rem;
+  color: #5b2cbf;
+  letter-spacing: 1px;
+  text-shadow: 1px 1px 4px rgba(91, 44, 191, 0.2);
+}
+
+.boutonsBas{
+  display: flex;
+  width: 100%;
+  margin-top: 2rem;
+  gap: 10rem;
+  justify-content: center;
 }
 
 /* Image logo */

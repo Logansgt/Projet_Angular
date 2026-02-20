@@ -2,22 +2,25 @@ import  {Component, Input, OnInit} from '@angular/core';
 import {FaceSnap} from '../models/face-snap';
 import {DatePipe, DecimalPipe, NgClass, NgStyle, PercentPipe, TitleCasePipe, UpperCasePipe} from '@angular/common';
 import {FaceSnapsService} from '../services/face-snaps.service';
-import {ActivatedRoute, RouterLink} from '@angular/router';
+import {ActivatedRoute, Router, RouterLink} from '@angular/router';
 import {StarPipe} from '../PipeTest';
 import {Button} from 'primeng/button';
 import {Checkbox} from 'primeng/checkbox';
 import {FormsModule} from '@angular/forms';
+import {Step, StepItem, StepPanel, Stepper} from 'primeng/stepper';
+import {Splitter} from 'primeng/splitter';
+import {DolarPipe} from '../DolarPipe';
 
 @Component({
   selector: 'app-single-face-snap',
-  imports: [NgStyle, NgClass, UpperCasePipe, TitleCasePipe, DatePipe, DecimalPipe, PercentPipe, RouterLink, StarPipe, Button, Checkbox, FormsModule],
+  imports: [NgStyle, NgClass, UpperCasePipe, TitleCasePipe, DatePipe, DecimalPipe, PercentPipe, RouterLink, StarPipe, Button, Checkbox, FormsModule, Stepper, StepItem, Step, StepPanel, Splitter, DolarPipe],
   templateUrl: './single-face-snap.html',
   styleUrl: './single-face-snap.scss',
 })
 export class SingleFaceSnap implements OnInit{
 
   constructor(private snapsService: FaceSnapsService,
-  private route: ActivatedRoute) {
+  private route: ActivatedRoute, private routeBack: Router) {
   }
 
   faceSnap!: FaceSnap;
@@ -56,5 +59,9 @@ export class SingleFaceSnap implements OnInit{
     }else{
       return 150;
     }
+  }
+
+  goHub(){
+    this.routeBack.navigateByUrl("facesnaps")
   }
 }

@@ -44,3 +44,12 @@
   object-fit: cover;
   border-radius: 8px;
 }
+
+.card{
+  margin-top: 2rem;
+  margin-bottom: 2rem;
+  display: flex;
+  gap: 5rem;
+  align-items: center;
+  justify-content: center;
+}

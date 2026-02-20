@@ -1,12 +1,16 @@
-<div class="face-snap-card" (click)="onview()">
-  <div class="verticalBox">
-    <h2>{{ faceSnap.title | titlecase }}</h2>
-    <div class = horizontal>
-  <label for="choixTitre">
-    Titre choisi :
-    <input pInputText id="choix" type="text" [(ngModel)]="faceSnap.title">
-  </label>
+<p-card [style]="{ width: '25rem', overflow: 'hidden'}" class = "card">
+  <ng-template #header>
+    <img alt="Card" class="w-full" [src]="faceSnap.url" />
+  </ng-template>
+  <ng-template #title>{{faceSnap.title}}</ng-template>
+  <ng-template #subtitle>{{faceSnap.createdAt | date}} </ng-template>
+  <p>
+   {{faceSnap.description}}
+  </p>
+  <ng-template #footer>
+    <div class="flex gap-4 mt-1">
+      <td><p-button icon="pi pi-search" (click)="onview()"></p-button></td>
+      <td><p-button icon="pi pi-shopping-bag"></p-button></td>
     </div>
-  </div>
-  <div class="banner" [ngStyle]="{'background-image': 'url(' + faceSnap.url + ')'}"></div>
-</div>
+  </ng-template>
+</p-card>

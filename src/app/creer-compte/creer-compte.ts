@@ -7,9 +7,11 @@ import {Password} from 'primeng/password';
 import {FormControl, FormGroup, FormsModule, ReactiveFormsModule, Validators} from '@angular/forms';
 import {UserService} from '../services/users.service';
 import {Observable} from 'rxjs';
-import {AsyncPipe} from '@angular/common';
+import {AsyncPipe, NgClass} from '@angular/common';
 import {IconField} from 'primeng/iconfield';
 import {InputIcon} from 'primeng/inputicon';
+import {Step, StepList, StepPanel, StepPanels, Stepper} from 'primeng/stepper';
+import {InputOtp} from 'primeng/inputotp';
 
 @Component({
   selector: 'app-creer-compte',
@@ -21,7 +23,14 @@ import {InputIcon} from 'primeng/inputicon';
     FormsModule,
     AsyncPipe,
     IconField,
-    InputIcon
+    InputIcon,
+    Stepper,
+    Step,
+    StepList,
+    NgClass,
+    StepPanels,
+    StepPanel,
+    InputOtp
   ],
   templateUrl: './creer-compte.html',
   styleUrl: './creer-compte.scss',
@@ -30,11 +39,13 @@ export class CreerCompte implements OnInit {
 
   obsBienvenu$!: Observable<string>;
   afficheBvn!: string;
+  activeStep: number = 1;
 
   profileForm = new FormGroup({
     email: new FormControl('', [Validators.required, Validators.email]),
     pwd: new FormControl('', [Validators.required, Validators.minLength(6)]),
   })
+  protected Code: any;
 
  constructor(private router: Router, private userService: UserService, private cd: ChangeDetectorRef){
 
@@ -50,7 +61,6 @@ export class CreerCompte implements OnInit {
       pwd: this.profileForm.value.pwd,
     };
     this.userService.addUser(newUser);
-    this.onContinue();
   }
 
   ngOnInit() {

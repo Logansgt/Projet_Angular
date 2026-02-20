@@ -1,25 +1,66 @@
-<div class="face-snap-card" [ngClass]="{snapped: snapOrNot}">
-<H2>{{faceSnap.title | titlecase | Pipetest}}</H2>
-  <br>
-  <nav>
-  <p-checkbox inputId="prop1" name="Nombre" value="Nombre" [(ngModel)]="Nombre" [binary]="true" />
-  <label for="prop1" class="ml-2"> Nombre </label>
-    <p-checkbox inputId="prop2" name="Pourcent" value="Pourcent" [(ngModel)]="Pourcent" [binary]="true" />
-    <label for="prop2" class="ml-2"> Pourcent </label>
-  </nav>
-  <br>
-  <a routerLink="/facesnaps">Back</a>
-<p>{{faceSnap.description}}</p>
-  <p>FaceSnap crée le : {{faceSnap.createdAt |date : 'dd/MM/yy'}}</p>
-  @if (Nombre){
-    <p>{{ 4346234.36 | number:'1.0-0'}}</p>
-  }
-  @if (Pourcent){
-    <p>{{ 0.4536 | percent}}</p>
-  }
-<img [src]="faceSnap.url">
-<p>
-  <p-button (click)="onAddSnap()">{{snapButton}}</p-button>
-  <span [ngStyle]="{ color: 'rgb(0,'+changerCouleur()+',0)' }">{{faceSnap.snaps}}</span>
-</p>
+<div class="card">
+  <p-stepper [value]="1">
+    <p-step-item [value]="1">
+      <p-step>Produit</p-step>
+      <p-step-panel>
+        <ng-template #content let-activateCallback="activateCallback">
+          <div class="face-snap-card" [ngClass]="{snapped: snapOrNot}">
+            <br>
+            <div class = "topProduit">
+            <p-button icon="pi pi-angle-left" (onClick)="goHub()"></p-button>
+            <H2>{{faceSnap.title | titlecase}}</H2>
+              <br>
+            </div>
+              <p-splitter  [style]="{ height: '20%' }">
+                <ng-template #panel>
+                  <div class = "gauche">
+                    <img [src]="faceSnap.url" [style]="{width: '40%'}">
+                    <p>Article en vente depuis le : {{faceSnap.createdAt |date : 'dd/MM/yy'}}</p>
+                  </div>
+                </ng-template>
+                <ng-template #panel>
+                  <div class="boutonsDroits">
+                    <div class = "prix">
+                    <span>{{"" + faceSnap.prix | dolarPipe}}</span>
+                      <p-button icon="pi pi-info-circle" (onClick)="activateCallback(2)"></p-button>
+                    </div>
+                    <p>{{faceSnap.description}}</p>
+                    <p-button>Ajouter au panier</p-button>
+                  </div>
+                </ng-template>
+              </p-splitter>
+          </div>
+        </ng-template>
+      </p-step-panel>
+    </p-step-item>
+    <p-step-item [value]="2">
+      <p-step>Description Techniques</p-step>
+      <p-step-panel>
+        <ng-template #content let-activateCallback="activateCallback">
+          <div class="face-snap-card" [ngClass]="{snapped: snapOrNot}">
+            <br>
+            <div class = "topProduit">
+              <p-button icon="pi pi-angle-left" (onClick)="goHub()"></p-button>
+              <H2>{{faceSnap.title | titlecase}}</H2>
+              <br>
+            </div>
+            <p-splitter  [style]="{ height: '20%' }">
+              <ng-template #panel>
+                <div class = "gauche">
+                  <img [src]="faceSnap.url" [style]="{width: '40%'}">
+                  <p>Article en vente depuis le : {{faceSnap.createdAt |date : 'dd/MM/yy'}}</p>
+                </div>
+              </ng-template>
+              <ng-template #panel>
+                <div class="boutonsDroits">
+                    <span>{{faceSnap.description}}</span>
+                  <p-button (onClick)="activateCallback(1)">Retour à la page du produit</p-button>
+                </div>
+              </ng-template>
+            </p-splitter>
+          </div>
+        </ng-template>
+      </p-step-panel>
+    </p-step-item>
+  </p-stepper>
 </div>
