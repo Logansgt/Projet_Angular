@@ -19,7 +19,7 @@
     basicstyle=\ttfamily\small,    % Police à chasse fixe
     stringstyle=\color{red},       % Couleur des chaînes
     keywordstyle=[1]\color{blue},     % Couleur des mots-clés de la catégorie 1
-    keywordstyle=[2]\color{orange},    % Couleur des mots-clés de la catégorie 2
+    keywordstyle=[2]\color{orange!60!red},    % Couleur des mots-clés de la catégorie 2
     keywordstyle=[3]\color{magenta},    % Couleur des mots-clés de la catégorie 3
     keywordstyle=[4]\color{green!60!black},    % Couleur des mots-clés de la catégorie 4
     commentstyle=\color{green!40!black}, % Couleur des commentaires
@@ -34,9 +34,9 @@
 
 \lstdefinelanguage{TypeScript}{
   morekeywords=[1]{export, class, let, var, const, function, return,this}, % bleu
-  morekeywords=[2]{string, number, Date, void, boolean}, % orange
-  morekeywords=[3]{import, implements, interface, Component, selector,constructor, true, false}, % rose
-  morekeywords=[4]{public,private}, %vert
+  morekeywords=[2]{string, number, Date, void, boolean, new,any,\$event}, % orange
+  morekeywords=[3]{import, implements, interface, Component, selector,constructor, true, false, input, @defer,@placeholder,@loading,@error,Validators}, % rose
+  morekeywords=[4]{public,private, event}, %vert
   sensitive=true,
   morecomment=[l]{//},
   morecomment=[s]{/*}{*/},
@@ -69,7 +69,7 @@
 \begin{lstlisting} [language=bash]
     ng new [nomProjet]
     // Ou encore
-    ng new [nomProjet] 
+    ng new [nomProjet]
          --style=scss  // Langage du style
          --skip-tests=true
 
@@ -115,7 +115,7 @@ import { Component } from '@angular/core';
 
 export class Test {
 
-}   
+}
 \end{lstlisting}
 
 On pourra bien sûr rajouter des lignes dans cette classe (comme des attributs par exemple).
@@ -126,7 +126,7 @@ export class Comp1{
   description!: string;
   createdAt!: Date;
   snaps!: number;
-}  
+}
 \end{lstlisting}
 
 \newpage
@@ -156,7 +156,7 @@ Une fois initialisée, on peut utiliser ces variables dans le fichier.html du co
 <p>{{description}}</p>
 \end{lstlisting}
 
-Ce qui donnera : 
+Ce qui donnera :
 \begin{center} %centrer
     \fbox{\includegraphics[width=10cm]{images/rendu1Composant.png}}
 \end{center}
@@ -234,7 +234,7 @@ Il ne faut pas oublier dans le html du composant de remplacer les appels avec fa
 <H2>{{faceSnap.title}}</H2>
 <p>{{faceSnap.description}}</p>
 <img [src]="faceSnap.url">
-\end{lstlisting}  
+\end{lstlisting}
 
 \newpage
 
@@ -369,7 +369,7 @@ Afin d'utiliser la méthode getSnapById, on va simplement injecté le service da
 
   faceSnap!: FaceSnap;
 
-  ngOnInit(): void { 
+  ngOnInit(): void {
     this.faceSnap = this.snapsService.getSnapById(faceSnapId);
   }
 
@@ -381,10 +381,10 @@ Afin d'utiliser la méthode getSnapById, on va simplement injecté le service da
 
 \subsection{Définition des routes :}
 
-Dans le fichier routes de l'application, on retrouve un tableau de Routes. On va y insérer toutes les routes de notre application : 
+Dans le fichier routes de l'application, on retrouve un tableau de Routes. On va y insérer toutes les routes de notre application :
 
 \begin{lstlisting}[language=TypeScript]
-  
+
 export const routes: Routes = [
   {path: 'facesnaps', component: FaceSnapList}, // route qui va afficher le contenu de FaceSnapList
   {path: '', component: HubPage}, // route vide, donc le hub
@@ -404,7 +404,7 @@ Grâce à ceci, il sera possible dans le HTML de définir, au lieu d'un composan
 \subsection{Naviger entre les composants :}
 
 Pour naviguer, il suffit d'utiliser routerLink (qu'on oublie pas d'importer dans le .ts de la où on l'utilise).
-Par exemple, avec un composant header : 
+Par exemple, avec un composant header :
 
 \begin{lstlisting}[language=HTML]
 
@@ -422,7 +422,7 @@ Ici, routerLinkActive sert à donné la classe active à l'élément dont la rou
 
 \newpage
 
-Maintenant, on peut naviguer dans la pages sans problème entre le hub et l'app : 
+Maintenant, on peut naviguer dans la pages sans problème entre le hub et l'app :
 
 \begin{center}
     \fbox{\includegraphics[width=13cm]{images/renduAvecRoutes.png}}
@@ -430,10 +430,10 @@ Maintenant, on peut naviguer dans la pages sans problème entre le hub et l'app 
 
 \subsection{Accéder à un élément en particulier :}
 
-Il est possible dans les routes de définir une variable qui changera : 
+Il est possible dans les routes de définir une variable qui changera :
 
 \begin{lstlisting}[language=TypeScript]
-  
+
 export const routes: Routes = [
   // La route avec l'id du snap afficher
   {path: 'facesnaps/:id', component: SingleFaceSnap},
@@ -446,7 +446,7 @@ export const routes: Routes = [
 Grâce aux méthodes pour récupérer un snap via un id, on peut dans une classe qui reprends nos snap (copié collé de Comp1) faire :
 
 \begin{lstlisting}[language=TypeScript]
-  
+
 constructor(private snapsService: FaceSnapsService,
   private route: ActivatedRoute) {
   }
@@ -460,11 +460,11 @@ constructor(private snapsService: FaceSnapsService,
 
 \end{lstlisting}
 
-Il ne manque plus qu'un moyen de mettre l'id du face snap dans l'url, j'utilise un bouton lié par un événement à cette méthode dans Comp1 : 
+Il ne manque plus qu'un moyen de mettre l'id du face snap dans l'url, j'utilise un bouton lié par un événement à cette méthode dans Comp1 :
 
 
 \begin{lstlisting}[language=TypeScript]
-  
+
 constructor(private router: Router){}
 
   @Input() faceSnap!: FaceSnap; // Accepte une valeur qui vient du parent
@@ -475,10 +475,755 @@ constructor(private router: Router){}
 
 \end{lstlisting}
 
-On peut maintenant choisir quel composant regarder en cliquant sur le bouton view : 
+On peut maintenant choisir quel composant regarder en cliquant sur le bouton view :
 
 \begin{center}
     \fbox{\includegraphics[width=13cm]{images/renduComposantParId.png}}
 \end{center}
+
+
+%Section numéro 6
+
+\newpage
+\section{\underline{Entrées des utilisateurs et dynamisme :}}
+
+\subsection{\underline{Entrée simple :}}
+
+On veut par exemple pouvoir changer dynamiquement le nom d'un composant, pour cela, on utilise ngModel sur l'attribut que l'on veut changer :
+
+\begin{lstlisting}[language=HTML]
+<label for="choixTitre">
+    Titre choisi :
+    <input id="choix" type="text" [(ngModel)]="faceSnap.title">
+  </label>
+\end{lstlisting}
+
+Cela peut également permettre d'ajouter des tris :
+
+\begin{lstlisting}[language=HTML]
+  <input type = "number" placeholder="Filtrer par snaps" #filter>
+  <button (click)="filtrerRes(Number.parseInt(filter.value))">Filtrer</button>
+  <br>
+  <input type = "text" placeholder="Filtrer par nom" #filterNom>
+  <button (click)="filtrerResNom($event, filterNom.value)">Filtrer</button>
+\end{lstlisting}
+
+Ces tris ont un "filter", un élément qui représente le contenu des input qu'on va pouvoir passer en paramètre de nos fonctions de tris :
+
+\begin{lstlisting}[language=TypeScript]
+
+filtrerRes(nb: number) {
+    if(!nb){
+      this.filteredfacesSnap = this.facesSnap;
+    }else{
+      this.filteredfacesSnap = this.faceSnapsService.getSnapFaces().filter(elt => elt.snaps > nb);
+    }
+  }
+
+
+  filtrerResNom(event: Event, value: string) {
+    event.stopPropagation();
+    if(!value || value === '') {
+      this.filteredfacesSnap = this.facesSnap;
+    }else{
+      this.filteredfacesSnap = this.faceSnapsService.getSnapFaces().filter(elt => elt.title.toLowerCase().includes(value.toLowerCase()));
+    }
+  }
+
+\end{lstlisting}
+
+\subsection{Entrée via un forms : }
+
+!!! Tout d'abbord il faut faire attention, un form refresh la page, si on l'utilise pour un tri par exemple, le tri ne se fera que pendant 1 secondes puis sera rafraichi.
+
+J'ai personnelement utilisé les forms pour l'authentification d'un utilisateur. On commence par définir le form dans le ts du composant (ici, hub-page.ts):
+
+\begin{lstlisting}[language=TypeScript]
+
+export class HubPage {
+  profileForm = new FormGroup({
+      name: new FormControl('', Validators.required),
+      email: new FormControl('', [Validators.required, Validators.email]),
+    })
+}
+
+\end{lstlisting}
+
+Les validators servent à valider les données. Il en existe de plusieurs types.
+On peut ensuite définir un form avec le même nom que l'attribut :
+
+\begin{lstlisting}[language=HTML]
+
+<form [formGroup]="profileForm" (ngSubmit)="handleSubmit()">
+    <input type="text" formControlName="name" />
+    <input type="email" formControlName="email" />
+    <button type="submit" [disabled]="!profileForm.valid">Continuer vers Snapface</button>
+  </form>
+
+\end{lstlisting}
+
+Ce form va utiliser ngSubmit, qui va envoyer les informations à la méthode entre guillemet. Dans cette méthode, on pourra accéder aux éléments du form avec nomForm.value.objetVoulu :
+
+\begin{lstlisting}[language=TypeScript]
+
+public handleSubmit(): void {
+    const email = this.profileForm.value.email;
+    this.userService.getUsers().subscribe(users => { // Je subscribe pour voir les changements
+      const present = users.some(u => u.email === email); // On check juste la presence
+
+      if (!present) {
+        throw new Error("L'utilisateur n'est pas dans la base");
+      } else {
+        this.onContinue();
+      }
+    });
+  }
+
+\end{lstlisting}
+
+
+%Section numéro 7
+
+\section{\underline{Objets observables : }}
+
+Par convention, on les écrits : objet\$ = of(values)
+
+Un observable commence à publier des valeurs uniquement si quelque chose est abonné à lui (méthode subscribe()). Exemple concret :
+
+
+\begin{lstlisting}[language=TypeScript]
+
+const numbers$ = of(1, 2, 3); // simple observable that emits three values
+
+\end{lstlisting}
+
+\begin{lstlisting}[language=TypeScript]
+
+numbers$.subscribe(
+  // Fontion qu'on execute lors de la lecture
+  value => console.log('Observable emitted the next value: ' + value)
+);
+
+\end{lstlisting}
+
+Pour utilser le constructeur d'observables il faut 4 choses :
+
+Premièrement, une fonction qu'utiliera le constructeur d'observable :
+
+\begin{lstlisting}[language=TypeScript]
+
+// This function runs when subscribe() is called
+function sequenceSubscriber(observer: Observer<number>) {
+  // synchronously deliver 1, 2, and 3, then completes
+  observer.next(1);
+  observer.next(2);
+  observer.next(3);
+  observer.complete();
+}
+\end{lstlisting}
+
+Ensuite, on construit l'objet observable :
+
+\begin{lstlisting}[language=TypeScript]
+const sequence = new Observable(sequenceSubscriber);
+\end{lstlisting}
+
+Enfin, l'objet subscription et la méthode qui va dérouler utiliser l'objet observable :
+
+\begin{lstlisting}[language=TypeScript]
+
+const subscription = numbers$.subscribe({
+  next: value => console.log('Observable emitted the next value: ' + value),
+  error: err => console.error('Observable emitted an error: ' + err),
+  complete: () => console.log('Observable emitted the complete notification') // on est automatiquement unsubscribe apres
+})
+
+\end{lstlisting}
+
+Exemple pour insérer le nom dynamique d'une page :
+
+\begin{lstlisting}[language=TypeScript]
+ngOnInit() {
+    this.afficheBvn = "";
+    this.obsBienvenu$ = new Observable<string>(observer => {
+      const message = "HomePage";
+      for(let i = 0; i < message.length; i++) {
+        setTimeout(() => {
+          observer.next(message[i]);
+        },(i+1)*100)
+      }
+      setTimeout(() =>{
+        observer.complete();
+      },(message.length +1)*500)
+    })
+
+    const affichage = {
+      next: (value: string) => {
+        this.afficheBvn += value;
+        this.cd.detectChanges();
+      }
+    }
+
+    const subscriber = this.obsBienvenu$.subscribe(affichage);
+
+  }
+\end{lstlisting}
+
+
+
+
+%Section numéro 8
+
+\newpage
+
+\section{\underline{Commandes utiles : }}
+
+\subsection{Commande "Input"}
+
+On peut utilser input de la manière suivante :
+
+\begin{lstlisting}[language=TypeScript]
+
+class User {
+  occupation = input<string>();
+}
+
+\end{lstlisting}
+
+Puis dans le html du composant :
+
+\begin{lstlisting}[language=HTML]
+
+<app-user occupation="Angular Developer"></app-user>
+
+\end{lstlisting}
+
+\subsection{Commande d'affichage en différé :}
+
+Pour afficher des éléments en différé, on dispose de plusieurs commandes :
+
+\begin{lstlisting}[language=TypeScript]
+
+@defer {
+        <article-comments />
+      } @placeholder (minimum 1s) {
+        <p>Placeholder for comments</p>
+      } @loading (minimum 1s; after 500ms) {
+        <p>Loading comments...</p>
+      } @error {
+        <p>Failed to load comments</p>
+      }
+
+\end{lstlisting}
+
+\subsection{Pipes (formatage) : }
+
+L'utilisation d'un pipe se fait en important la bonne libraire dans le .ts, puis, dans le .HTML, on peut l'utiliser de la manière suivante  :
+
+\begin{lstlisting}[language=HTML]
+<h2>{{ faceSnap.title | titlecase }}</h2>
+\end{lstlisting}
+
+Il existe plusieurs pipes tels que :
+
+\begin{itemize}[label=\textbullet, left=1em]
+  \item titlecase (Majuscule A Chaque Mot)
+  \item percentPipe (Transforme un nombre en pourcentage)
+  \item UpperCasePipe/LowerCasePipe (Full maj ou full min)
+  \item DecimalPipe (Transforme un nombre décimal)
+  \item DatePipe (Formate une date selon le format choisi)
+\end{itemize}
+
+Par exemple :
+
+\begin{lstlisting}[language=HTML]
+<p>FaceSnap cree le : {{faceSnap.createdAt |date : 'dd/MM/yy'}}</p>
+<p>{{ 4346234.36 | number:'1.0-0'}}</p>
+<p>{{ 0.4536 | percent}}</p>
+\end{lstlisting}
+
+\dots
+
+Il est aussi possible de crée son propre pipe, on crée un nouveau fichier pipe.ts de la manière suivante :
+
+
+\begin{lstlisting}[language=TypeScript]
+
+import {Pipe, PipeTransform} from '@angular/core';
+@Pipe({
+  name: 'Pipetest',
+})
+export class StarPipe implements PipeTransform {
+  transform(value: string): string {
+    return `(etoile) ${value} (etoile)`;
+  }
+}
+
+\end{lstlisting}
+
+Puis de l'utiliser :
+
+\begin{lstlisting}[language=HTML]
+<h2>{{ faceSnap.title | titlecase | Pipetest}}</h2>
+\end{lstlisting}
+
+Ce qui donnera :
+
+\begin{center}
+    \fbox{\includegraphics[width=10cm]{images/renduPipePerso.png}}
+\end{center}
+
+\newpage
+
+
+\section{\underline{Librairie PrimeNG :}}
+
+\subsection{Qu'est-ce que primeNG :}
+
+PrimeNG est une bibliothèque qui permet de limiter le css dans les classes tout en ayant un rendu propre est travaillé à l'aide de preset déjà fais. Voici ce qu'on peut optenir d'une page sans AUCUN css :
+
+\begin{center}
+    \fbox{\includegraphics[width=10cm]{images/renduSansCSS.png}}
+\end{center}
+
+\subsection{Mise en place de PrimeNG :}
+
+Dans un premier temps, il faut installer sur la machine à l'aide de npm les prérequis de primeNG :
+
+\begin{lstlisting}[language=bash]
+npm install primeng @primeuix/themes
+\end{lstlisting}
+
+Ensuite, on peut commencer la configuration.
+Le premier fichier à modifier sera le fichier config de l'application. Il faudra y introduire PrimeNg, un thème et des options :
+
+\newpage
+
+\begin{lstlisting}[language=TypeScript]
+
+import {providePrimeNG} from 'primeng/config';
+import Aura from '@primeuix/themes/aura';
+import Nora from '@primeuix/themes/nora';
+import Lara from '@primeuix/themes/lara';
+import Material from '@primeuix/themes/material';
+
+export const appConfig: ApplicationConfig = {
+
+  providers: [
+    providePrimeNG({
+      theme:{
+        preset: myPreset,
+        options: {
+          prefix: 'p',
+          darkModeSelector: '.my-app-dark',
+          cssLayer: false
+        }
+      },
+      ripple: true,
+      csp:{
+        nonce: '...'
+      },
+    })
+  ]
+};
+
+\end{lstlisting}
+
+On peut ensuite définir son propre preset en le faisant dériver d'un éxistant, c'est la meilleure manière de personnaliser son application.
+Pour se faire, on crée un nouveau fichier myPreset :
+
+\newpage
+
+\begin{lstlisting}[language=TypeScript]
+  const MyPreset = definePreset(Aura, {
+  semantic: {
+    colorScheme: {
+      light: {
+        surface: { // Ecritures ...
+          50: '{slate.50}',
+          100: '{slate.100}',
+          200: '{slate.200}',
+          300: '{slate.300}',
+          400: '{slate.400}',
+          500: '{slate.500}',
+          600: '{slate.600}',
+          700: '{slate.700}',
+          800: '{slate.800}',
+          900: '{slate.900}',
+          950: '{slate.950}'},
+        primary:{ // Boutons, input...
+          color: '{violet.500}',
+          inverseColor: '#ffffff',
+          hoverColor: '{violet.700}',
+          activeColor: '{violet.800}'},
+        formField:{
+          hoverBorderColor: '{primary.color}',
+        }
+      },
+      dark: {
+      surface: {
+        50: '{zinc.50}',
+        100: '{zinc.100}',
+        200: '{zinc.200}',
+        300: '{zinc.300}',
+        400: '{zinc.400}',
+        500: '{zinc.500}',
+        600: '{zinc.600}',
+        700: '{zinc.700}',
+        800: '{zinc.800}',
+        900: '{zinc.900}',
+        950: '{zinc.950}'},
+        primary:{
+          color: '{slate.300}',
+          inverseColor: '#ffffff',
+          hoverColor: '{slate.500}',
+          activeColor: '{slate.600}'}
+      },
+      formField:{
+        hoverBorderColor: '{primary.color}'}
+    },}});
+export default MyPreset;
+
+\end{lstlisting}
+
+Une fois se fichier crée, il suffit de remplacer le preset dans le fichier config :
+
+import myPreset from './MyPreset';
+
+\begin{lstlisting}[language=TypeScript]
+
+export const appConfig: ApplicationConfig = {
+
+  providers: [
+    provideBrowserGlobalErrorListeners(),
+    provideRouter(routes),
+    provideAnimationsAsync(),
+    providePrimeNG({
+      theme:{
+        preset: myPreset,
+        options: {
+          prefix: 'p',
+          darkModeSelector: '.my-app-dark',
+          cssLayer: false
+        }
+      },
+    }
+}
+
+\end{lstlisting}
+
+Une fois le preset mis en place, il s'applique sur les balises prime ng.
+Puisque j'ai défini le préfixe comme étant p, on peut retrouver des balises tels que <p-button>.
+
+
+\subsection{Différentes utilisations : }
+
+\subsubsection{DarkMode}
+
+Il est assez simple d'ajouter par exemple un mode sombre à notre application, j'ai défini dans mon préset les couleurs avec l'option dark,
+dans mon fichier config, j'ai ajouter un selector pour le dark mode. Une fois réalisé, il suffit de 2 choses :
+Un moyen d'activé le dark mode (ici un élément switch de primeNG : )
+
+\begin{lstlisting}[language=Html]
+  <p-toggleswitch [(ngModel)]="modeSombre" (click)="toggleDarkMode()" [dt]="switchLight"/>
+\end{lstlisting}
+
+Ainsi que la méthode toggleDarkMode qui suit :
+
+\begin{lstlisting}[language=TypeScript]
+  protected toggleDarkMode() {
+    const element = document.querySelector('html');
+    if(element !== null){
+      element.classList.toggle('my-app-dark');
+    }
+  }
+\end{lstlisting}
+
+\subsubsection{Authentification}
+
+Avec PrimeNg, il est assez simple de modéliser un mot de passe ainsi que de vérifier son niveau de fiabilité. On crée simplement un mdp à l'aide d'une balise a laquelle on va ajouter des options :
+
+\begin{lstlisting}[language=Html]
+<p-password promptLabel="Choose a password" [feedback]="false" [toggleMask]="true" formControlName="pwd"></p-password>
+\end{lstlisting}
+
+Ici, un mot de passe pour se connecter, il n'y a pas de feedback et on peut voir le mdp à l'aide d'un oeil.
+Mais pour créer un compte ça sera plutot :
+
+
+\begin{lstlisting}[language=Html]
+<p-password promptLabel="Choose a password" formControlName="pwd"/>
+\end{lstlisting}
+
+Ce qui donnera :
+
+\begin{center} %centrer
+    \fbox{\includegraphics[width=10cm]{images/RenduMdp.png}}
+\end{center}
+
+\newpage
+
+\subsubsection{Autocomplete des input : }
+
+Pour l'autocomplete, il suffit de définir la liste des items qu'on recherche et d'initialiser une méthode de recherche. Elle se présente sous cette forme :
+
+\begin{lstlisting}[language=TypeScript]
+  search(event: any) {
+    const query = event.query.toLowerCase(); // recup le contenue
+
+    this.items = this.facesSnap
+      .map(face => face.title) // Remplace tous les face par leur titre
+      .filter(title => title.toLowerCase().includes(query)); // filtre
+  }
+\end{lstlisting}
+
+Il suffit maintenant dans le html d'utiliser une balise <p-autocomplete/>
+
+\begin{lstlisting}[language=Html]
+    <p-autoComplete [(ngModel)]="filtrerNom" [dropdown]="true" [suggestions]="items" (completeMethod)="search($event)"  inputId="labelF" #filterName/>
+\end{lstlisting}
+
+\subsubsection{Icones primeNG :}
+
+Pour commencer, il faut installer les packages nécessaires :
+
+\begin{lstlisting}[language=bash]
+  npm install primeicons
+\end{lstlisting}
+
+Dans le fichier angular.json, dans notre projet dans le tableau des "styles", si ce n'est pas déja fais, on ajoute :
+
+\begin{lstlisting}[language=bash]
+"node_modules/primeicons/primeicons.css",
+\end{lstlisting}
+
+Ensuite, il sera possible de les utiliser.
+Pour ce faire, il suffit soit de définir un icone dans un objet :
+
+
+\begin{lstlisting}[language=Html]
+   <p-button
+      [icon]="VueTable ? 'pi pi-list' : 'pi pi-info-circle'"
+      (click)="VueTable = !VueTable"
+      [rounded]="true"
+      [text]="true">
+    </p-button>
+\end{lstlisting}
+
+\newpage
+
+Ou alors de définir une zone d'icone (en général devant un input) :
+
+\begin{lstlisting}[language=Html]
+   <p-iconfield>
+      <p-inputicon class="pi pi-lock"></p-inputicon>
+    <p-password promptLabel="Choose a password" [feedback]="false" [toggleMask]="true" formControlName="pwd"></p-password>
+    </p-iconfield>
+\end{lstlisting}
+
+\subsubsection{Boutons split :}
+
+Pour déclarer un split bouton, on utilise une balise prévu pour. Cette balise se comporte comme un bouton normal, mais on peut ya joter une liste d'item (qui seront les autres actions possible) :
+
+\begin{lstlisting}[language=Html]
+    <p-splitbutton label= "filtrer" (click)="filtrerResNom($event, filterName.value)" [model]="items2">Filtrer</p-splitbutton>
+\end{lstlisting}
+
+Cette liste de type MenuItem[] sera remplie de cette mannière :
+
+
+\begin{lstlisting}[language=TypeScript]
+  this.items2=[
+      {
+        label : "Copier",
+        icon: "pi pi-copy",
+        command: () => {
+          this.copierNom();
+        }
+      },
+      {
+        label: "Coller",
+        icon: "pi pi-clipboard",
+        command: ()=>{
+          this.collerNom();
+        }
+      }
+    ]
+\end{lstlisting}
+
+Ce bouton se présente sous cette forme :
+
+
+\begin{center} %centrer
+    \fbox{\includegraphics[width=5cm]{images/splitBouton.png}}
+\end{center}
+
+\newpage
+
+\subsubsection{Copy Paste :}
+
+C'est une option assez simple à mettre en place et assez utile.
+J'ai écrit deux méthodes que j'ai assigné à mon splitBouton, les voici :
+
+\begin{lstlisting}[language=TypeScript]
+copierNom(){
+    if(!this.filtrerNom)
+      return;
+    else{
+      navigator.clipboard.writeText(this.filtrerNom); // Ecrit dans le presse papier
+    }
+  }
+
+  collerNom() {
+    navigator.clipboard.readText().then(
+      text => {
+        this.filtrerNom = text;   // met a jour le ngModel aussi
+      });
+  }
+\end{lstlisting}
+
+\newpage
+
+\subsection{Tableaux :}
+
+Les tableaux sont une partie importante de l'affichage, leur mise en place n'est pas complexe grâce à primeNG.
+Dans un premier temps, on définit un tableau dans notre code HTML :
+
+\begin{lstlisting}[language=HTML]
+<p-table [value]="filteredfacesSnap" dataKey="id"> // Liste sur lequel repose le tableau a preciser
+    <ng-template pTemplate="header">
+      <tr>
+        <th>Titre</th>
+        <th>Image</th>
+        <th>Prix</th>
+        <th>Date</th>
+        <th>Rating</th>
+      </tr>
+    </ng-template>
+    <ng-template pTemplate="body" let-product>
+      <tr>
+        <td>{{ product.title }}</td>
+        <td><img [src]="product.url" class="table-img"></td>
+        <td>{{ product.prix | dolarPipe }}</td>
+        <td>{{ product.createdAt | date: 'dd/MM/yy' }}</td>
+        <td><p-rating [(ngModel)]="product.rating" [readonly]="true"></p-rating></td>
+        <td><p-button icon="pi pi-search" (click)="onview(product.id)"></p-button></td>
+      </tr>
+    </ng-template>
+  </p-table>
+\end{lstlisting}
+
+Ce tableau est conçu de la manière la plus simple possible. On peut remarquer que j'y ai ajouté une balise
+<p-rating> qui va retranscrire un nombre en rating (ex : 4 = 4 étoiles pleines). J'ai également ajoué un bouton pour inspecter le produit
+
+\subsubsection{Mise en ordre automatiques des colonnes : }
+
+Il est possible de faire un tri croissant ou décroissant sur chaque colonne. Il suffit d'ajouter quelques arguments :
+Dans l'entête du tableau on ajoute un tri de base au lancement de l'application :
+
+\begin{lstlisting}[language=HTML]
+<p-table [value]="filteredfacesSnap" sortField="title">
+\end{lstlisting}
+
+Ensuite, on peut déterminer les colonnes sur lesquels on pourra éffectuer un tris :
+
+\begin{lstlisting}[language=HTML]
+ <ng-template pTemplate="header">
+      <tr>
+        <th pSortableColumn="title"> // Sort sur la colonne du titre
+
+          Titre
+          <p-sortIcon field="title"/> // Icone
+        </th>
+        <th>Image</th>
+        <th pSortableColumn="prix"> // Sort sur la colonne du titre
+
+          Prix
+          <p-sortIcon field="prix"/> // Icone
+          </th>
+        <th>Date</th>
+        <th>Rating</th>
+      </tr>
+    </ng-template>
+\end{lstlisting}
+
+Notre tableau est maintenant propre et proffessionel, voici le rendu de ces quelques lignes :
+
+\fbox{\includegraphics[width=\textwidth]{images/renduTableauPrimeNG.png}}
+
+
+
+
+\subsection{Paginator :}
+
+Il existe plusieurs types de paginator, ceux sur les tableaux et les autres. Je vais donc diviser cette partie en 2 catégories
+
+\subsubsection{Paginator dans les tableaux :}
+
+Dans un tableau, il est très simple d'ajouter un paginator. On ajoute simplement dans l'entête :
+
+\begin{lstlisting}[language=HTML]
+  // Avec rows le nombre de ligne sur chaque page
+ <p-table [value]="filteredfacesSnap" dataKey="id" [paginator]="true" [rows]="3" sortField="title">
+\end{lstlisting}
+
+\subsubsection{Paginator dans un cas général :}
+
+Lorsque l'on implémente un paginator en général, c'est un petit peu plus complexe.
+Dans un premier temps, on le défini :
+
+\begin{lstlisting}[language=HTML]
+<p-paginator (onPageChange)="onPageChange($event)" [first]="0" [rows]="3" [totalRecords]="filteredfacesSnap.length"></p-paginator>
+\end{lstlisting}
+
+On devra ensuite dans le ts écrire :
+
+\begin{itemize}[label=\textbullet, left=1em]
+  \item La méthode appelé par onPageChange
+  \item L'attribut first
+  \item L'attribut rows
+  \item Une méthode qui découpe notre liste avec le nombre d'item sur chaque page
+\end{itemize}
+
+On déclare :
+
+\begin{lstlisting}[language=HTML]
+first: number = 0;
+rows: number = 3;
+\end{lstlisting}
+
+Pour la méthode onPageChange :
+
+\begin{lstlisting}[language=TypeScript]
+onPageChange(event: any){
+    this.first = event.first;
+    this.rows = event.rows;
+  }
+\end{lstlisting}
+
+Et enfin la méthode de découpe :
+
+\begin{lstlisting}[language=TypeScript]
+
+ getPaginatedSnaps() {
+    return this.filteredfacesSnap.slice(this.first, this.first + this.rows);
+  }
+\end{lstlisting}
+
+Il ne reste plus qu'a afficher nos éléments selon cette liste découpée :
+
+\begin{lstlisting}[language=TypeScript]
+@for(f of getPaginatedSnaps(); track f.id){
+    <app-comp1 [faceSnap]="f" />
+
+  }
+  <p-paginator (onPageChange)="onPageChange($event)" [first]="0" [rows]="3" [totalRecords]="filteredfacesSnap.length"></p-paginator>
+\end{lstlisting}
+
+\newpage
+
+On peut maintenant naviguer dans notre page comme dans un vrai site de E-boutique :
+
+\fbox{\includegraphics[width=\textwidth]{images/renduPaginator.png}}
 
 \end{document}
