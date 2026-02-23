@@ -1,17 +1,100 @@
-<div class="landing-block">
-  <h1>{{afficheBvn}}</h1>
-  <img ngSrc="./assets/snapface-logo.png" alt="Snapface logo">
-  <form [formGroup]="profileForm" (ngSubmit)="creerUser()">
-    <p-iconfield>
-      <p-inputicon class = "pi pi-at"></p-inputicon>
-    <input pInputText type="email" formControlName="email" />
-    </p-iconfield>
-    <p-iconfield>
-      <p-inputicon class="pi pi-lock" />
-    <p-password formControlName="pwd"/>
-    </p-iconfield>
-    <p-button type="submit" [disabled]="!profileForm.valid">Créer le compte</p-button>
-  </form>
-  <div class="landing-links">
+  <div class="card flex justify-center">
+    <div class="stepper-wrapper" style="width:50%; margin:0 auto;">
+            <p-stepper [(value)]="activeStep" class="basis-[40rem]">
+                <p-step-list>
+                    <p-step [value]="1" class="flex flex-row flex-auto gap-2">
+                        <ng-template #content let-activateCallback="activateCallback" let-value="value">
+                            <p-button class="bg-transparent border-0 inline-flex flex-col gap-2" (click)="activateCallback()">
+                                <span
+                                    class="rounded-full border-2 w-12 h-12 inline-flex items-center justify-center"
+                                    [ngClass]="{
+                                        'bg-primary text-primary-contrast border-primary': value <= activeStep,
+                                        'border-surface': value > activeStep
+                                    }"
+                                >
+                                    <i class="pi pi-user"></i>
+                                </span>
+                            </p-button>
+                        </ng-template>
+                    </p-step>
+                    <p-step [value]="2" class="flex flex-row flex-auto gap-2">
+                        <ng-template #content let-activateCallback="activateCallback" let-value="value">
+                            <p-button class="bg-transparent border-0 inline-flex flex-col gap-2" (click)="activateCallback()">
+                                <span
+                                    class="rounded-full border-2 w-12 h-12 inline-flex items-center justify-center"
+                                    [ngClass]="{
+                                        'bg-primary text-primary-contrast border-primary': value <= activeStep,
+                                        'border-surface': value > activeStep
+                                    }"
+                                >
+                                    <i class="pi pi-star"></i>
+                                </span>
+                            </p-button>
+                        </ng-template>
+                    </p-step>
+                    <p-step [value]="3" class="flex flex-row flex-auto gap-2">
+                        <ng-template #content let-activateCallback="activateCallback" let-value="value">
+                            <p-button class="bg-transparent border-0 inline-flex flex-col gap-2" (click)="activateCallback()">
+                                <span
+                                    class="rounded-full border-2 w-12 h-12 inline-flex items-center justify-center"
+                                    [ngClass]="{
+                                        'bg-primary text-primary-contrast border-primary': value <= activeStep,
+                                        'border-surface': value > activeStep
+                                    }"
+                                >
+                                    <i class="pi pi-id-card"></i>
+                                </span>
+                            </p-button>
+                        </ng-template>
+                    </p-step>
+                </p-step-list>
+                <div class="landing-block">
+                <h1>{{afficheBvn}}</h1>
+                </div>
+                <p-step-panels>
+                    <p-step-panel [value]="1">
+                        <ng-template #content let-activateCallback="activateCallback">
+                          <div class = "landing-block">
+                          <form [formGroup]="profileForm" (ngSubmit)="creerUser()">
+                            <p-iconfield>
+                              <p-inputicon class = "pi pi-at"></p-inputicon>
+                              <input pInputText type="email" formControlName="email" />
+                            </p-iconfield>
+                            <p-iconfield>
+                              <p-inputicon class="pi pi-lock" />
+                              <p-password formControlName="pwd"/>
+                            </p-iconfield>
+                            <p-button type="submit" [disabled]="!profileForm.valid" (onClick)="activateCallback(2)">Créer le compte</p-button>
+                          </form>
+                          </div>
+                        </ng-template>
+                    </p-step-panel>
+                    <p-step-panel [value]="2">
+                        <ng-template #content let-activateCallback="activateCallback">
+                          <div class ="landing-block">
+                            <h2>Un code vous à été transmis par mail, veuillez le rentrer :</h2>
+                            <p-inputOtp [(ngModel)]="Code" [integerOnly]="true" [length]="6"  />
+                            <br>
+                            <div class="boutonsBas">
+                                <p-button (onClick)="activateCallback(1)" label="Back" severity="secondary" icon="pi pi-arrow-left" />
+                                <p-button (onClick)="activateCallback(3)" label="Next" icon="pi pi-arrow-right" iconPos="right" />
+                            </div>
+                          </div>
+                        </ng-template>
+                    </p-step-panel>
+                    <p-step-panel [value]="3">
+                        <ng-template #content let-activateCallback="activateCallback">
+                          <div class ="landing-block">
+                            <h2>Votre compte à correctement été crée, vous pouvez vous connecter</h2>
+                            <br>
+                            <div class="boutonsBas">
+                              <p-button (onClick)="onContinue()" label="Se connecter" icon="pi pi-arrow-right" iconPos="right" />
+                            </div>
+                          </div>
+                        </ng-template>
+                    </p-step-panel>
+                </p-step-panels>
+            </p-stepper>
+        </div>
   </div>
-</div>
+

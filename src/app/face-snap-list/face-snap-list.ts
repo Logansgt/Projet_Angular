@@ -18,6 +18,7 @@ import {Rating} from 'primeng/rating';
 import {DolarPipe} from '../DolarPipe';
 import {Paginator} from 'primeng/paginator';
 import {Router} from '@angular/router';
+import {PanierService} from '../services/panier.service';
 
 @Component({
   selector: 'app-face-snap-list',
@@ -36,6 +37,7 @@ export class FaceSnapList implements OnInit{
   first: number = 0;
   rows: number = 3;
   expanded: boolean = false;
+  mail!: string;
   infos: any[] = [
     {id : 1 , Nomstock: "Logan Saget", nbstock: 4},
     {id : 2 , Nomstock: "Logan Saget", nbstock: 10},
@@ -45,7 +47,7 @@ export class FaceSnapList implements OnInit{
     {id : 6 , Nomstock: "Logan Saget", nbstock: 21}
   ];
 
-  constructor(private faceSnapsService: FaceSnapsService, protected router: Router) {}
+  constructor(private faceSnapsService: FaceSnapsService, protected router: Router, private panierServ: PanierService) {}
 
   ngOnInit() {
     this.facesSnap = this.faceSnapsService.getSnapFaces();
@@ -137,4 +139,17 @@ export class FaceSnapList implements OnInit{
   protected readonly Comp1 = Comp1;
 
   protected readonly onemptied = onemptied;
+
+  protected goPanier() {
+    this.router.navigateByUrl("facesnaps/panier/1")
+  }
+
+  protected ajouterPanier(FaceSnap: FaceSnap) {
+    const email = prompt("Entrez votre email :");
+
+    if (email) {
+      const panier = this.panierServ.getPanierId(email);
+      panier.ajouter(FaceSnap);
+    }
+  }
 }

@@ -14,14 +14,21 @@
       [rounded]="true"
       [text]="true">
     </p-button>
+    <p-button
+      [icon]="'pi pi-shopping-cart'"
+      (click)="goPanier()"
+      [rounded]="true"
+      [text]="true">
+    </p-button>
   </div>
 </div>
 
 @if (VueTable === true) {
+  <div class = card>
   @for(f of getPaginatedSnaps(); track f.id){
     <app-comp1 [faceSnap]="f" />
-
   }
+  </div>
   <p-paginator (onPageChange)="onPageChange($event)" [first]="0" [rows]="3" [totalRecords]="filteredfacesSnap.length"></p-paginator>
 }@else{
   <p-table [value]="filteredfacesSnap" dataKey="id" [paginator]="true" [rows]="3" sortField="title">
@@ -48,6 +55,7 @@
         <td>{{ product.createdAt | date: 'dd/MM/yy' }}</td>
         <td><p-rating [(ngModel)]="product.rating" [readonly]="true"></p-rating></td>
         <td><p-button icon="pi pi-search" (click)="onview(product.id)"></p-button></td>
+        <td><p-button icon="pi pi-shopping-bag" (click)="ajouterPanier(product)"></p-button></td>
       </tr>
     </ng-template>
   </p-table>
